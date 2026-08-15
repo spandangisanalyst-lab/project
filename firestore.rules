@@ -1,0 +1,124 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Default deny catch-all
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // 1. Swimmer participants
+    match /participants/{participantId} {
+      allow read: if true;
+      allow create: if request.resource.data.id == participantId
+                    && request.resource.data.fullName is string
+                    && request.resource.data.fullName.size() <= 200
+                    && request.resource.data.clubName is string
+                    && request.resource.data.email is string;
+      allow update, delete: if true;
+    }
+
+    // 2. Timing and Place Results
+    match /results/{resultId} {
+      allow read: if true;
+      allow create: if request.resource.data.id == resultId
+                    && request.resource.data.participantName is string
+                    && request.resource.data.eventName is string
+                    && request.resource.data.swimTime is string;
+      allow update, delete: if true;
+    }
+
+    // 3. Live Broadcast Updates (Delays, announcements, start times)
+    match /liveUpdates/{updateId} {
+      allow read: if true;
+      allow create: if request.resource.data.id == updateId
+                    && request.resource.data.type is string
+                    && request.resource.data.title is string
+                    && request.resource.data.message is string;
+      allow update, delete: if true;
+    }
+
+    // 4. Team profiles and biographies
+    match /clubs/{clubId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 5. Activity log trackers
+    match /activityLogs/{logId} {
+      allow read: if true;
+      allow create: if request.resource.data.id == logId
+                    && request.resource.data.message is string;
+      allow update, delete: if true;
+    }
+
+    // 6. Outbox email notifications
+    match /emailNotices/{noticeId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 7. Event timings
+    match /event_timings/{timingId} {
+      allow read: if true;
+      allow create, update, delete: if true;
+    }
+
+    // 8. Gmail configuration
+    match /config/{configId} {
+      allow read, write: if true;
+    }
+
+    // 9. Connection validation testing
+    match /test/{testId} {
+      allow read, write: if true;
+    }
+
+    // 10. Flagged swimmers requiring manual auditing
+    match /flaggedSwimmers/{swimmerId} {
+      allow read, write: if true;
+    }
+
+    // 11. Championship global settings
+    match /settings/{settingId} {
+      allow read, write: if true;
+    }
+
+    // 12. Public feedback
+    match /feedback/{feedbackId} {
+      allow read, write: if true;
+    }
+
+    // 13. Completed events list
+    match /completed_events/{completedId} {
+      allow read, write: if true;
+    }
+    // 14. Staff Roster (officials, guests, volunteers)
+    match /staff_roster/{staffId} {
+      allow read, write: if true;
+    }
+    // 15. FotoFinish Images
+    match /foto_finishes/{finishId} {
+      allow read, write: if true;
+    }
+
+    // 16. Remote nodes and signals for high-precision photofinish streaming
+    match /system_nodes/{nodeId} {
+      allow read, write: if true;
+    }
+    match /system_remote_requests/{requestId} {
+      allow read, write: if true;
+    }
+    match /camera_streams/{streamId} {
+      allow read, write: if true;
+    }
+    match /system_sound_trigger/{triggerId} {
+      allow read, write: if true;
+    }
+  }
+}

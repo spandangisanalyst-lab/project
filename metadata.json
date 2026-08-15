@@ -1,0 +1,6 @@
+{
+  "name": "Cooch Behar Swimming Portal",
+  "description": "An elite, full-featured digital hub for the Cooch Behar Town Club Inter-Club Swimming Championship. Features live registration, robust participant and event management, real-time results dashboards, points leaderboard, and dynamic certificate generation.",
+  "requestFramePermissions": ["camera"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

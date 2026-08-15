@@ -1,0 +1,219 @@
+{
+  "entities": {
+    "Participant": {
+      "title": "Participant",
+      "description": "An amateur swimmer registered for the championships, with detailed bios and achievements.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique identifier" },
+        "fullName": { "type": "string", "description": "Full legal name" },
+        "dateOfBirth": { "type": "string", "format": "date", "description": "Swimmer's birthday YYYY-MM-DD" },
+        "age": { "type": "integer", "description": "Computed age as of competition day" },
+        "gender": { "type": "string", "enum": ["Male", "Female"] },
+        "ageGroup": { "type": "string", "description": "Target bracket e.g. U-12 Girls" },
+        "clubName": { "type": "string", "description": "Club name representing" },
+        "email": { "type": "string", "format": "email", "description": "Contact email" },
+        "contactNumber": { "type": "string", "description": "Phone number" },
+        "events": { "type": "array", "description": "Races registered" },
+        "photoUrl": { "type": "string", "description": "Profile picture URL" },
+        "ageProofUrl": { "type": "string", "description": "Birth verification scan URL" },
+        "registrationDate": { "type": "string", "format": "date-time", "description": "Signup time" },
+        "notes": { "type": "string", "description": "Official comments" },
+        "status": { "type": "string", "enum": ["Pending Verification", "Verified", "Flagged"] },
+        "biography": { "type": "string", "description": "Athlete personal bio" },
+        "achievements": { "type": "array", "description": "Notable past performance history" }
+      },
+      "required": ["id", "fullName", "dateOfBirth", "age", "gender", "ageGroup", "clubName", "email", "contactNumber", "events", "photoUrl", "registrationDate", "status"]
+    },
+    "Staff": {
+      "title": "Staff",
+      "description": "Event staff, officials, guests, and volunteers.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "clubOrOrganization": { "type": "string" },
+        "photoUrl": { "type": "string" },
+        "addedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "name", "role", "addedAt"]
+    },
+    "Result": {
+      "title": "Result",
+      "description": "An official podium layout timing sheet verification.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "participantId": { "type": "string" },
+        "participantName": { "type": "string" },
+        "clubName": { "type": "string" },
+        "eventName": { "type": "string" },
+        "ageGroup": { "type": "string" },
+        "position": { "type": "integer", "enum": [1, 2, 3] },
+        "points": { "type": "integer" },
+        "swimTime": { "type": "string" },
+        "recordedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "participantId", "participantName", "clubName", "eventName", "ageGroup", "position", "points", "swimTime", "recordedAt"]
+    },
+    "LiveUpdate": {
+      "title": "LiveUpdate",
+      "description": "Live bulletins updated on the feed (e.g. delays, starts, moments).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "type": "string", "enum": ["Delay", "Start Time", "Notable Moment", "Announcement"] },
+        "title": { "type": "string" },
+        "message": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "eventName": { "type": "string" }
+      },
+      "required": ["id", "type", "title", "message", "timestamp"]
+    },
+    "ClubProfile": {
+      "title": "ClubProfile",
+      "description": "Biographies, profiles, logos, achievements of competing swim clubs.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "Unique club name or slug" },
+        "clubName": { "type": "string" },
+        "biography": { "type": "string" },
+        "achievements": { "type": "array" },
+        "photoUrl": { "type": "string" },
+        "established": { "type": "string" },
+        "contactEmail": { "type": "string" },
+        "contactPhone": { "type": "string" }
+      },
+      "required": ["id", "clubName"]
+    },
+    "ActivityLog": {
+      "title": "ActivityLog",
+      "description": "System audits and administrative traces.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "type": { "type": "string", "enum": ["Registration", "Result_Add", "Result_Delete", "Participant_Edit", "Participant_Delete", "System", "Broadcast", "LiveUpdate"] },
+        "message": { "type": "string" },
+        "user": { "type": "string" }
+      },
+      "required": ["id", "timestamp", "type", "message", "user"]
+    },
+    "EmailNotice": {
+      "title": "EmailNotice",
+      "description": "Simulated emails dispatched after actions.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "recipientEmail": { "type": "string", "format": "email" },
+        "recipientName": { "type": "string" },
+        "subject": { "type": "string" },
+        "content": { "type": "string" },
+        "type": { "type": "string", "enum": ["Confirmation", "Certificate", "Broadcast"] },
+        "status": { "type": "string", "enum": ["Sent", "Failed"] },
+        "sentAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "recipientEmail", "recipientName", "subject", "content", "type", "status", "sentAt"]
+    },
+    "EventTiming": {
+      "title": "EventTiming",
+      "description": "Swim timings record for individual lane and heat timings.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "participantId": { "type": "string" },
+        "participantName": { "type": "string" },
+        "clubName": { "type": "string" },
+        "eventName": { "type": "string" },
+        "ageGroup": { "type": "string" },
+        "swimTime": { "type": "string" },
+        "batchIndex": { "type": "integer" }
+      },
+      "required": ["id", "participantId", "participantName", "clubName", "eventName", "ageGroup", "swimTime", "batchIndex"]
+    },
+    "MeetSettings": {
+      "title": "MeetSettings",
+      "description": "Global settings for the swim championship, including name, logos, rules, announcements, and customized events.",
+      "type": "object",
+      "properties": {
+        "meetName": { "type": "string" },
+        "meetTitle": { "type": "string" },
+        "edition": { "type": "string" },
+        "subtitle": { "type": "string" },
+        "year": { "type": "string" },
+        "organization": { "type": "string" },
+        "address": { "type": "string" },
+        "phoneSpandan": { "type": "string" },
+        "phoneGuha": { "type": "string" },
+        "email": { "type": "string" },
+        "footerText": { "type": "string" },
+        "rulebook": { "type": "string" },
+        "announcements": { "type": "array" },
+        "customEvents": { "type": "object" }
+      },
+      "required": ["meetName", "meetTitle", "edition", "subtitle", "year", "organization", "address", "phoneSpandan", "phoneGuha", "email", "footerText", "rulebook", "announcements", "customEvents"]
+    },
+    "Feedback": {
+      "title": "Feedback",
+      "description": "Public feedback for the tournament organizers.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "senderName": { "type": "string" },
+        "senderEmail": { "type": "string" },
+        "clubName": { "type": "string" },
+        "message": { "type": "string" },
+        "rating": { "type": "integer" },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "senderName", "senderEmail", "clubName", "message", "rating", "timestamp"]
+    }
+  },
+  "firestore": {
+    "feedback/{feedbackId}": {
+      "schema": "Feedback",
+      "description": "Tournament feedback submitted by competitors, coaches, and viewers."
+    },
+    "participants/{participantId}": {
+      "schema": "Participant",
+      "description": "Individual swimmer profiles with dynamic verification, age groups, bio and achievements."
+    },
+    "flaggedSwimmers/{swimmerId}": {
+      "schema": "Participant",
+      "description": "Dossiers of swimmers whose physical age and certificate did not pass validation and require manual audit."
+    },
+    "settings/{settingId}": {
+      "schema": "MeetSettings",
+      "description": "Global administration parameters and dynamic customized event structures."
+    },
+    "results/{resultId}": {
+      "schema": "Result",
+      "description": "Championship races timing records, podium placings, gold/silver/bronze positions."
+    },
+    "liveUpdates/{updateId}": {
+      "schema": "LiveUpdate",
+      "description": "Event updates published in real-time by administrators."
+    },
+    "clubs/{clubId}": {
+      "schema": "ClubProfile",
+      "description": "Dynamic biography and details for participating teams."
+    },
+    "activityLogs/{logId}": {
+      "schema": "ActivityLog",
+      "description": "Administrative auditable action logs."
+    },
+    "emailNotices/{noticeId}": {
+      "schema": "EmailNotice",
+      "description": "Simulated dispatches for communications."
+    },
+    "event_timings/{timingId}": {
+      "schema": "EventTiming",
+      "description": "Registry of timing records for event heaters/swim timings."
+    },
+    "staff_roster/{staffId}": {
+      "schema": "Staff",
+      "description": "Event staff, officials, guests, and volunteers registry."
+    }
+  }
+}

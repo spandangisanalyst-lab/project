@@ -1,0 +1,26 @@
+{
+  "receipt": {
+    "dateRef": { "x": 170, "y": 45.2 },
+    "name": { "x": 38, "y": 106.5 },
+    "club": { "x": 38, "y": 118.9 },
+    "group": { "x": 38, "y": 132.5 },
+    "phone": { "x": 122, "y": 106.5 },
+    "dob": { "x": 122, "y": 118.9 },
+    "email": { "x": 122, "y": 132.5 },
+    "eventStartX": 42,
+    "eventYPositions": [154.3, 169.5, 185.5],
+    "eventHeatX": 121,
+    "eventLaneX": 156,
+    "totalEvents": { "x": 156, "y": 200 }
+  },
+  "idCard": {
+    "name": { "x": 27.0, "y": 48.0 },
+    "club": { "x": 27.0, "y": 52.5 },
+    "phone": { "x": 24.5, "y": 63.5 },
+    "email": { "x": 24.5, "y": 67.0 },
+    "events": { "x": 24.5, "y": 70.5 },
+    "photoCenter": { "x": 27.0, "y": 28.5 },
+    "photoRadius": 15.5,
+    "qrBox": { "x": 7.0, "y": 74.0, "s": 9.0 }
+  }
+}
